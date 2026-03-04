@@ -5,63 +5,37 @@
    ============================================================= */
 
 :root {
-    /* Fondo y texto base */
     --background:            #fafafb;
     --foreground:            #1a1c2d;
-
-    /* Card */
     --card:                  #ffffff;
     --card-foreground:       #1a1c2d;
-
-    /* Popover */
     --popover:               #ffffff;
     --popover-foreground:    #1a1c2d;
-
-    /* Primary — índigo (igual que el header React) */
     --primary:               #6366f1;
     --primary-foreground:    #ffffff;
-
-    /* Secondary */
     --secondary:             #f1f5f9;
     --secondary-foreground:  #1e293b;
-
-    /* Accent — cyan */
     --accent:                #22d3ee;
     --accent-foreground:     #1a1c2d;
-
-    /* Muted */
     --muted:                 #f1f5f9;
     --muted-foreground:      #64748b;
-
-    /* Destructive */
     --destructive:           #ef4444;
     --destructive-foreground:#ffffff;
-
-    /* Border / Input / Ring */
     --border:                #e2e8f0;
     --input:                 #f1f5f9;
     --ring:                  #6366f1;
-
-    /* Border radius global */
     --radius:                1rem;
-
-    /* Tipografía */
     --font-heading:          'DM Serif Display', serif;
     --font-body:             'Poppins', sans-serif;
-
-    /* Charts */
     --chart-1:               #6366f1;
     --chart-2:               #10b981;
     --chart-3:               #8b5cf6;
     --chart-4:               #f59e0b;
     --chart-5:               #ec4899;
-
-    /* Sombras de card */
     --card-shadow:           0 10px 40px -10px rgba(99, 102, 241, 0.15);
     --hover-shadow:          0 20px 60px -15px rgba(99, 102, 241, 0.25);
 }
 
-/* Dark mode opcional — activar si añades la clase .dark al <html> */
 .dark {
     --background:            #0f172a;
     --foreground:            #f8fafc;
@@ -119,23 +93,19 @@ img.lazy {
 
 @layer components {
 
-    /* ── Selección de texto ─────────────────────────────────── */
     ::selection {
-        background-color: rgba(99, 102, 241, 0.2); /* primary con opacidad */
+        background-color: rgba(99, 102, 241, 0.2);
     }
 
-    /* ── Inputs base ────────────────────────────────────────── */
     input {
         @apply outline-none;
     }
 
-    /* ── Botones disabled ───────────────────────────────────── */
     button:disabled,
     button:disabled:hover {
         @apply cursor-not-allowed opacity-50;
     }
 
-    /* ── Iconos bagisto-shop font ───────────────────────────── */
     [class^="icon-"],
     [class*=" icon-"] {
         font-family: "bagisto-shop" !important;
@@ -149,7 +119,6 @@ img.lazy {
         -moz-osx-font-smoothing: grayscale;
     }
 
-    /* ── Iconos (códigos sin cambios) ───────────────────────── */
     .icon-checkout-address:before { content: "\e944"; }
     .icon-edit:before             { content: "\e943"; }
     .icon-add-new:before          { content: "\e900"; }
@@ -220,7 +189,6 @@ img.lazy {
     .icon-uncheck:before          { content: "\e941"; }
     .icon-users:before            { content: "\e942"; }
 
-    /* ── Scrollbars ─────────────────────────────────────────── */
     .journal-scroll::-webkit-scrollbar {
         width: 14px;
         cursor: pointer;
@@ -251,7 +219,6 @@ img.lazy {
         scrollbar-width: none;
     }
 
-    /* ── Custom select ──────────────────────────────────────── */
     .custom-select {
         -webkit-appearance: none;
         -moz-appearance: none;
@@ -265,16 +232,13 @@ img.lazy {
         background-position-x: calc(100% - (100% - 10px));
     }
 
-    /* ── Box sizing global + fuente Bagisto ─────────────────── */
     * {
         @apply box-border font-poppins;
     }
 
-    /* ── Direction helpers ──────────────────────────────────── */
     .direction-ltr { direction: ltr; }
     .direction-rtl { direction: rtl; }
 
-    /* ── Labels de estado (orders, etc.) ────────────────────── */
     .label-pending,
     .label-processing,
     .label-closed,
@@ -294,7 +258,7 @@ img.lazy {
     .label-canceled    { @apply bg-rose-600; }
     .label-info        { @apply bg-slate-400; }
 
-    /* ── Botones Bagisto originales (sin cambios) ───────────── */
+    /* ── Botones Bagisto originales — NO MODIFICAR ─────────── */
     .primary-button {
         @apply flex gap-x-1.5 items-center place-content-center font-medium rounded-xl
                text-white bg-navyBlue border border-navyBlue px-8 py-4 max-w-max
@@ -327,7 +291,7 @@ img.lazy {
         100% { opacity: 1; }
     }
 
-    /* ── 404 page styles (sin cambios) ─────────────────────── */
+    /* ── 404 page styles ─────────────────────────────────────── */
     .wrapper-404 {
         aspect-ratio: 16/9;
         position: relative;
@@ -366,12 +330,9 @@ img.lazy {
     }
 
     html { margin-top: 0px !important; }
-
     .break-word-custom { word-break: break-word; }
-
     .required:after { content: "*"; }
 
-    /* ── Skip to main content (accesibilidad) ───────────────── */
     .skip-to-main-content-link {
         @apply absolute ltr:left-[-9999px] rtl:right-[-9999px] z-[999] p-[1em] bg-black text-white opacity-0;
     }
@@ -380,17 +341,17 @@ img.lazy {
     }
 
     /* ════════════════════════════════════════════════════════
-       NUEVOS COMPONENTES — KillaVibes Header
+       COMPONENTES KILLAVIBES — Header + Home
        ════════════════════════════════════════════════════════ */
 
-    /* Glassmorphism helper para el header sticky */
+    /* Glassmorphism helper */
     .kv-glass {
         background: rgba(250, 250, 251, 0.8);
         backdrop-filter: blur(24px);
         -webkit-backdrop-filter: blur(24px);
     }
 
-    /* Botón primario estilo React (rounded-full + gradiente) */
+    /* Botón primario gradiente */
     .kv-btn-primary {
         @apply inline-flex items-center justify-center gap-2
                rounded-full bg-gradient-to-r from-primary to-accent
@@ -399,7 +360,7 @@ img.lazy {
                hover:scale-105 hover:shadow-xl;
     }
 
-    /* Botón secundario outline estilo React */
+    /* Botón secundario outline */
     .kv-btn-secondary {
         @apply inline-flex items-center justify-center gap-2
                rounded-full border-2 border-primary
@@ -408,7 +369,7 @@ img.lazy {
                hover:bg-primary hover:text-white;
     }
 
-    /* Botón icono circular del header */
+    /* Botón icono circular */
     .kv-icon-btn {
         @apply flex h-10 w-10 items-center justify-center
                rounded-full text-muted-foreground
@@ -416,7 +377,7 @@ img.lazy {
                hover:scale-110 hover:bg-primary/10 hover:text-primary;
     }
 
-    /* Link de navegación con underline animado */
+    /* Nav link con underline animado */
     .kv-nav-link {
         position: relative;
         @apply px-4 py-2 text-sm font-medium text-muted-foreground
@@ -425,16 +386,12 @@ img.lazy {
     .kv-nav-link::after {
         content: '';
         position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 0;
-        height: 2px;
+        bottom: 0; left: 0;
+        width: 0; height: 2px;
         background: linear-gradient(90deg, var(--primary), var(--accent));
         transition: width 0.3s ease;
     }
     .kv-nav-link:hover::after { width: 100%; }
-
-    /* Fondo hover sutil para nav links */
     .kv-nav-link::before {
         content: '';
         position: absolute;
@@ -446,7 +403,7 @@ img.lazy {
     }
     .kv-nav-link:hover::before { opacity: 1; }
 
-    /* Input de búsqueda estilo React */
+    /* Input búsqueda */
     .kv-search-input {
         @apply block w-full rounded-full border-2 border-border
                bg-muted/50 py-2.5 pl-10 pr-4 text-sm font-medium text-foreground
@@ -455,16 +412,15 @@ img.lazy {
                focus:border-primary focus:bg-background focus:outline-none focus:ring-2 focus:ring-primary/20;
     }
 
-    /* Badge "Hot" / "New" en links de nav */
+    /* Badge Hot */
     .kv-badge-hot {
         @apply ml-1 rounded-full bg-gradient-to-r from-red-500 to-orange-500
                px-2 py-0.5 text-[10px] font-bold uppercase text-white animate-pulse;
     }
 
-    /* Card con sombra */
+    /* Card base */
     .kv-card {
-        @apply rounded-2xl border border-border bg-card
-               shadow-card transition-all duration-300;
+        @apply rounded-2xl border border-border bg-card shadow-card transition-all duration-300;
     }
     .kv-card:hover {
         box-shadow: var(--hover-shadow);
@@ -472,12 +428,12 @@ img.lazy {
         transform: translateY(-2px);
     }
 
-    /* Skeleton loader KillaVibes (más suave que el de Bagisto) */
+    /* Skeleton KillaVibes */
     .kv-skeleton {
         @apply animate-pulse rounded bg-muted;
     }
 
-    /* Utilidades glassmorphism adicionales */
+    /* Glassmorphism adicional */
     .glass-effect {
         background: rgba(255, 255, 255, 0.15);
         backdrop-filter: blur(20px);
@@ -486,8 +442,127 @@ img.lazy {
         box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
     }
 
+    /* Gradient text */
     .gradient-text {
         background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    /* ─────────────────────────────────────────────────────────
+       HOME — Sección Hero
+    ───────────────────────────────────────────────────────── */
+
+    /* Contenedor hero sin los 90px de Bagisto */
+    .kv-container {
+        width: 100%;
+        max-width: 1400px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+
+    /* Feature card del hero */
+    .kv-feature-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 0.75rem;
+        padding: 1rem;
+        border-radius: 1rem;
+        border: 1px solid rgba(226, 232, 240, 0.5);
+        transition: all 0.3s ease;
+        cursor: default;
+        position: relative;
+        overflow: hidden;
+    }
+    .kv-feature-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 24px rgba(99, 102, 241, 0.15);
+        border-color: rgba(99, 102, 241, 0.3);
+    }
+
+    /* Stats bar del hero */
+    .kv-stats-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.5rem;
+        border-radius: 1rem;
+        background: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(226, 232, 240, 0.5);
+        box-shadow: 0 4px 20px rgba(99, 102, 241, 0.08);
+    }
+
+    /* Badge pill estándar de sección */
+    .kv-section-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: linear-gradient(135deg, rgba(99, 102, 241, 0.10), rgba(34, 211, 238, 0.10));
+        padding: 0.6rem 1.25rem;
+        border-radius: 9999px;
+        border: 1px solid rgba(99, 102, 241, 0.20);
+        margin-bottom: 1.25rem;
+    }
+    .kv-section-badge span {
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        background: linear-gradient(135deg, #6366f1, #22d3ee);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    /* Orbe decorativo reutilizable */
+    .kv-orb {
+        position: absolute;
+        border-radius: 9999px;
+        filter: blur(64px);
+        pointer-events: none;
+        animation: kv-pulse-global 4s ease-in-out infinite;
+    }
+
+    /* Testimonial card */
+    .kv-testimonial-card {
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(135deg, var(--card) 0%, rgba(255, 255, 255, 0.85) 100%);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 2px solid rgba(226, 232, 240, 0.5);
+        border-radius: 1.25rem;
+        box-shadow: 0 4px 20px -4px rgba(99, 102, 241, 0.10);
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+        transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+    }
+    .kv-testimonial-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 60px -15px rgba(99, 102, 241, 0.25);
+        border-color: rgba(99, 102, 241, 0.3);
+    }
+
+    /* Section heading estilo KillaVibes */
+    .kv-section-heading {
+        font-family: var(--font-heading), 'DM Serif Display', serif;
+        font-size: clamp(1.8rem, 4vw, 2.8rem);
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        color: var(--foreground);
+        margin: 0;
+    }
+    .kv-section-heading .kv-gradient-word {
+        background: linear-gradient(135deg, #6366f1, #22d3ee);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -496,16 +571,16 @@ img.lazy {
 
 
 /* =============================================================
-   UTILITIES LAYER — animaciones y helpers adicionales
+   UTILITIES LAYER
    ============================================================= */
 
 @layer utilities {
-    .animate-float      { animation: float 4s ease-in-out infinite; }
-    .animate-fade-in    { animation: fade-in 0.6s ease-out forwards; }
-    .animate-fade-in-up { animation: fade-in-up 0.8s ease-out forwards; }
-    .animate-pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
-    .animate-gradient   { background-size: 200% 200%; animation: gradient-shift 3s ease infinite; }
-    .animate-swing      { animation: swing 1s ease-in-out; }
+    .animate-float      { animation: kv-float-global 4s ease-in-out infinite; }
+    .animate-fade-in    { animation: kv-fade-in 0.6s ease-out forwards; }
+    .animate-fade-in-up { animation: kv-fade-in-up 0.8s ease-out forwards; }
+    .animate-pulse-glow { animation: kv-pulse-glow 3s ease-in-out infinite; }
+    .animate-gradient   { background-size: 200% 200%; animation: kv-gradient-shift 3s ease infinite; }
+    .animate-swing      { animation: kv-swing 1s ease-in-out; }
 
     .delay-100 { animation-delay: 100ms; }
     .delay-300 { animation-delay: 300ms; }
@@ -514,19 +589,68 @@ img.lazy {
 
 
 /* =============================================================
-   BARRA DE PROGRESO DE SCROLL (header React)
+   KEYFRAMES GLOBALES KillaVibes
+   ============================================================= */
+
+@keyframes kv-pulse-global {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+@keyframes kv-float-global {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50%       { transform: translateY(-12px) rotate(2deg); }
+}
+
+@keyframes kv-fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes kv-fade-in-up {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes kv-pulse-glow {
+    0%, 100% { box-shadow: 0 0 10px rgba(99, 102, 241, 0.4); }
+    50%       { box-shadow: 0 0 25px rgba(99, 102, 241, 0.6); }
+}
+
+@keyframes kv-gradient-shift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes kv-swing {
+    0%, 100% { transform: rotate(0deg); transform-origin: top center; }
+    20%       { transform: rotate(15deg); }
+    40%       { transform: rotate(-10deg); }
+    60%       { transform: rotate(5deg); }
+    80%       { transform: rotate(-5deg); }
+}
+
+@keyframes kv-shimmer {
+    0%   { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+
+/* =============================================================
+   BARRA DE PROGRESO DE SCROLL
    ============================================================= */
 
 #kv-scroll-progress {
     background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary));
     background-size: 200% 100%;
-    animation: gradient-shift 3s ease infinite;
+    animation: kv-gradient-shift 3s ease infinite;
     transition: width 0.1s linear;
 }
 
 
 /* =============================================================
-   SCROLLBAR GLOBAL (estilo React)
+   SCROLLBAR GLOBAL
    ============================================================= */
 
 ::-webkit-scrollbar       { width: 10px; }
@@ -540,7 +664,7 @@ img.lazy {
 
 
 /* =============================================================
-   REDUCE MOTION (accesibilidad)
+   REDUCE MOTION
    ============================================================= */
 
 @media (prefers-reduced-motion: reduce) {
@@ -560,3 +684,5 @@ img.lazy {
 @media print {
     .no-print { display: none !important; }
 }
+
+

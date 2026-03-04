@@ -32,18 +32,14 @@ module.exports = {
         extend: {
             /* ─────────────────────────────────────────
                COLORES
-               Bagisto originales + variables CSS del
-               header React (primary, accent, muted…)
             ───────────────────────────────────────── */
             colors: {
-                /* Bagisto originales */
                 navyBlue:    "#060C3B",
                 lightOrange: "#F6F2EB",
                 darkGreen:   "#40994A",
                 darkBlue:    "#0044F2",
                 darkPink:    "#F85156",
 
-                /* Header React — apuntan a CSS vars definidas en app.css */
                 background:  "var(--background)",
                 foreground:  "var(--foreground)",
 
@@ -80,7 +76,6 @@ module.exports = {
                 input:  "var(--input)",
                 ring:   "var(--ring)",
 
-                /* Chart colors (por si los usas en reportes del frontend) */
                 "chart-1": "var(--chart-1)",
                 "chart-2": "var(--chart-2)",
                 "chart-3": "var(--chart-3)",
@@ -90,7 +85,6 @@ module.exports = {
 
             /* ─────────────────────────────────────────
                FUENTES
-               Bagisto originales + heading/sans del React
             ───────────────────────────────────────── */
             fontFamily: {
                 poppins:  ["Poppins"],
@@ -109,10 +103,11 @@ module.exports = {
                 xl:   "calc(var(--radius) + 0.5rem)",
                 "2xl":"calc(var(--radius) + 1rem)",
                 full: "9999px",
+                "2.5xl": "2.5rem",
             },
 
             /* ─────────────────────────────────────────
-               BACKDROP BLUR (glassmorphism del header)
+               BACKDROP BLUR
             ───────────────────────────────────────── */
             backdropBlur: {
                 xs:    "2px",
@@ -121,13 +116,13 @@ module.exports = {
                 lg:    "16px",
                 xl:    "24px",
                 "2xl": "40px",
+                "3xl": "60px",
             },
 
             /* ─────────────────────────────────────────
                KEYFRAMES
             ───────────────────────────────────────── */
             keyframes: {
-                /* Bagisto existente */
                 skeleton: {
                     "0%":   { backgroundPosition: "-1250px 0" },
                     "100%": { backgroundPosition: "1250px 0"  },
@@ -136,15 +131,13 @@ module.exports = {
                     "0%":   { opacity: "0" },
                     "100%": { opacity: "1" },
                 },
-
-                /* Header React */
                 "fade-in": {
                     from: { opacity: "0" },
                     to:   { opacity: "1" },
                 },
                 "fade-in-up": {
-                    from: { opacity: "0", transform: "translateY(30px)"           },
-                    to:   { opacity: "1", transform: "translateY(0)"              },
+                    from: { opacity: "0", transform: "translateY(30px)"            },
+                    to:   { opacity: "1", transform: "translateY(0)"               },
                 },
                 "slide-in-up": {
                     from: { opacity: "0", transform: "translateY(40px) scale(0.95)" },
@@ -204,10 +197,10 @@ module.exports = {
                BOX SHADOW
             ───────────────────────────────────────── */
             boxShadow: {
-                card:       "0 10px 40px -10px rgba(99, 102, 241, 0.15)",
+                card:        "0 10px 40px -10px rgba(99, 102, 241, 0.15)",
                 "card-hover":"0 20px 60px -15px rgba(99, 102, 241, 0.25)",
-                glow:       "0 0 20px rgba(99, 102, 241, 0.4)",
-                "glow-lg":  "0 0 40px rgba(99, 102, 241, 0.6)",
+                glow:        "0 0 20px rgba(99, 102, 241, 0.4)",
+                "glow-lg":   "0 0 40px rgba(99, 102, 241, 0.6)",
             },
         },
     },
@@ -215,78 +208,108 @@ module.exports = {
     plugins: [],
 
     /* ─────────────────────────────────────────────────────────
-       SAFELIST
-       Clases generadas dinámicamente (JS de scroll, Vue, etc.)
-       que Tailwind no detecta en el contenido estático.
+       SAFELIST COMPLETO
+       Incluye clases del header, home hero y testimonios
     ───────────────────────────────────────────────────────── */
     safelist: [
         /* Bagisto original */
         { pattern: /icon-/ },
 
-        /* Opacidades de background usadas por el JS de scroll */
+        /* ── Opacidades de background ─── */
         "bg-background/50",
         "bg-background/60",
         "bg-background/80",
         "bg-background/95",
 
-        /* Backdrop blur del header sticky */
+        /* ── Backdrop blur ─── */
         "backdrop-blur-sm",
         "backdrop-blur-md",
         "backdrop-blur-xl",
         "backdrop-blur-2xl",
 
-        /* Borders dinámicos */
+        /* ── Borders ─── */
         "border-transparent",
         "border-border/30",
         "border-border/40",
         "border-border/50",
 
-        /* Sombras dinámicas */
+        /* ── Sombras ─── */
         "shadow-none",
         "shadow-lg",
         "shadow-xl",
         "shadow-2xl",
+        "shadow-card",
+        "shadow-card-hover",
+        "shadow-glow",
+        "shadow-glow-lg",
 
-        /* Colores de texto */
+        /* ── Colores de texto ─── */
         "text-primary",
         "text-muted-foreground",
         "text-foreground",
         "text-destructive",
+        "text-accent",
+        "text-card-foreground",
 
-        /* Hover de texto */
+        /* ── Hover de texto ─── */
         "hover:text-primary",
         "hover:text-primary/80",
 
-        /* Backgrounds de hover/estado */
+        /* ── Backgrounds ─── */
         "hover:bg-primary/5",
         "hover:bg-primary/10",
         "hover:bg-destructive/5",
         "bg-primary/5",
         "bg-primary/10",
+        "bg-primary/20",
         "bg-muted/50",
+        "bg-card/50",
+        "bg-card/80",
+        "bg-background",
 
-        /* Gradientes usados en botones y barra de progreso */
+        /* ── Gradientes hero y secciones ─── */
         "from-primary",
+        "from-primary/5",
+        "from-primary/10",
+        "from-primary/20",
         "via-accent",
+        "via-background",
+        "via-primary/5",
         "to-accent",
+        "to-accent/5",
+        "to-accent/10",
+        "to-accent/20",
         "to-primary",
+        "to-background",
         "bg-gradient-to-r",
+        "bg-gradient-to-br",
+        "bg-gradient-to-b",
+        "bg-gradient-to-t",
+        "bg-gradient-to-tr",
 
-        /* Scale en hover de iconos */
+        /* ── Blur para orbes ─── */
+        "blur-2xl",
+        "blur-3xl",
+
+        /* ── Mix blend ─── */
+        "mix-blend-overlay",
+
+        /* ── Scale hover ─── */
         "hover:scale-105",
         "hover:scale-110",
 
-        /* Ring del input de búsqueda */
+        /* ── Focus ring ─── */
         "focus:ring-2",
         "focus:ring-primary/20",
         "focus:border-primary",
 
-        /* Rounded */
+        /* ── Rounded ─── */
         "rounded-full",
         "rounded-xl",
         "rounded-2xl",
+        "rounded-3xl",
 
-        /* Animaciones */
+        /* ── Animaciones ─── */
         "animate-fade-in",
         "animate-fade-in-up",
         "animate-float",
@@ -295,13 +318,85 @@ module.exports = {
         "animate-gradient",
         "animate-pulse",
         "animate-bounce",
+        "animate-spin",
+        "animate-ping",
+        "animate-slide-in-up",
 
-        /* Delay utilities */
+        /* ── Delays ─── */
         "delay-100",
         "delay-300",
         "delay-500",
 
-        /* Utilidades glassmorphism */
+        /* ── Translate para carrusel Alpine ─── */
+        "translate-x-full",
+        "-translate-x-full",
+        "translate-y-0",
+        "translate-y-4",
+
+        /* ── Responsive hero grid (applied via @media en CSS) ─── */
+        "lg:hidden",
+        "hidden",
+        "lg:block",
+        "lg:grid-cols-2",
+        "lg:grid-cols-3",
+        "lg:grid-cols-4",
+        "grid-cols-2",
+        "grid-cols-3",
+
+        /* ── Height utilitarios hero ─── */
+        "min-h-[90vh]",
+        "h-full",
+
+        /* ── Glassmorphism ─── */
         "kv-glass",
+        "glass-effect",
+        "gradient-text",
+
+        /* ── KillaVibes components ─── */
+        "kv-btn-primary",
+        "kv-btn-secondary",
+        "kv-icon-btn",
+        "kv-nav-link",
+        "kv-search-input",
+        "kv-badge-hot",
+        "kv-card",
+        "kv-skeleton",
+        "kv-container",
+        "kv-feature-card",
+        "kv-stats-bar",
+        "kv-section-badge",
+        "kv-orb",
+        "kv-testimonial-card",
+        "kv-section-heading",
+        "kv-hero-grid",
+        "kv-hero-left",
+        "kv-hero-right",
+        "kv-features-grid",
+
+        // ── Register KillaVibes ────────────────────────────────
+        "kv-register-root",
+        "kv-register-overlay",
+        "kv-register-card",
+        "kv-register-header",
+        "kv-register-title",
+        "kv-register-subtitle",
+        "kv-register-icon-wrap",
+        "kv-register-grid",
+        "kv-register-label",
+        "kv-register-input",
+        "kv-register-error",
+        "kv-register-actions",
+        "kv-register-btn-primary",
+        "kv-register-btn-secondary",
+        "kv-register-newsletter",
+        "kv-register-account-exists",
+        "kv-register-account-exists__link",
+        "kv-register-footer",
+        "kv-register-logo-wrap",
+        "kv-register-logo",
+        "kv-field-group",
+        "kv-field-group--full",
+        "kv-register-orb--tr",
+        "kv-register-orb--bl",
     ],
 };
