@@ -17,7 +17,7 @@
 
             @foreach ($categories as $category)
                 <a href="{{ url($category->url_path) }}" style="text-decoration: none; color: inherit; background: white; border-radius: 20px; border: 1px solid #eee; overflow: hidden; display: block; transition: 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-                    
+
                     <div style="height: 250px; background: #f5f5f5; position: relative;">
                         @if ($category->image_url)
                             <img src="{{ $category->image_url }}" style="width: 100%; height: 100%; object-fit: cover;" alt="{{ $category->name }}">

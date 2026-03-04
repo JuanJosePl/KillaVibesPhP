@@ -1,22 +1,114 @@
 {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.before') !!}
 
-<div class="flex min-h-[78px] w-full justify-between border border-b border-l-0 border-r-0 border-t-0 px-[60px] max-1180:px-8">
-    <!--
-        This section will provide categories for the first, second, and third levels. If
-        additional levels are required, users can customize them according to their needs.
-    -->
-    <!-- Left Nagivation Section -->
-    <div class="flex items-center gap-x-10 max-[1180px]:gap-x-5">
+{{-- ============================================================
+     Estilos del nav — inline en el <head> vía <style> tag.
+     100% independiente de Tailwind purge.
+============================================================ --}}
+<style>
+    /* ── Nav links ─────────────────────────────────────── */
+    .kv-nav-item {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 6px 14px;
+        font-size: 14px;
+        font-weight: 500;
+        color: #4b5563;
+        text-decoration: none;
+        white-space: nowrap;
+        border-radius: 8px;
+        transition: color 0.25s ease, background-color 0.25s ease;
+    }
+    .kv-nav-item:hover {
+        color: #6366f1;
+        background-color: rgba(99,102,241,0.06);
+    }
+    .kv-nav-item::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 14px;
+        right: 14px;
+        height: 2px;
+        border-radius: 9999px;
+        background: linear-gradient(90deg, #6366f1, #22d3ee);
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+        transform-origin: left;
+    }
+    .kv-nav-item:hover::after {
+        transform: scaleX(1);
+    }
+
+    /* ── Icono acción circular ──────────────────────────── */
+    .kv-action-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 38px;
+        height: 38px;
+        border-radius: 9999px;
+        color: #6b7280;
+        cursor: pointer;
+        transition: color 0.25s ease, background-color 0.25s ease, transform 0.25s ease;
+        text-decoration: none;
+    }
+    .kv-action-btn:hover {
+        color: #6366f1;
+        background-color: rgba(99,102,241,0.10);
+        transform: scale(1.08);
+    }
+
+    /* ── Badge HOT ─────────────────────────────────────── */
+    .kv-badge-hot {
+        display: inline-flex;
+        align-items: center;
+        padding: 2px 7px;
+        border-radius: 9999px;
+        font-size: 9px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #fff;
+        background: linear-gradient(135deg, #ef4444, #f97316);
+        animation: kvPulse 2s ease-in-out infinite;
+    }
+    @keyframes kvPulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.75; }
+    }
+</style>
+
+{{-- ============================================================
+     BARRA PRINCIPAL DEL HEADER
+============================================================ --}}
+<div style="
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 68px;
+    padding: 0 60px;
+    width: 100%;
+">
+
+    {{-- ══════════════════════════════════════════
+         IZQUIERDA: Logo + Nav links
+    ══════════════════════════════════════════ --}}
+    <div style="display:flex; align-items:center; gap:8px;">
+
         {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.logo.before') !!}
 
-        <a
-            href="{{ route('shop.home.index') }}"
-            aria-label="@lang('shop::app.components.layouts.header.bagisto')"
-        >
+        {{-- Logo --}}
+        <a href="{{ route('shop.home.index') }}"
+           style="display:flex; align-items:center; margin-right:24px; flex-shrink:0; text-decoration:none;"
+           aria-label="@lang('shop::app.components.layouts.header.bagisto')">
             <img
                 src="{{ core()->getCurrentChannel()->logo_url ?? bagisto_asset('images/logo.svg') }}"
-                width="131"
-                height="29"
+                style="height:36px; width:auto; transition:transform 0.3s ease;"
+                onmouseover="this.style.transform='scale(1.05)'"
+                onmouseout="this.style.transform='scale(1)'"
+                width="131" height="29"
                 alt="{{ config('app.name') }}"
             >
         </a>
@@ -25,87 +117,111 @@
 
         {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.category.before') !!}
 
-        <div class="flex items-center gap-x-8">
-            <a href="{{ route('shop.home.index') }}" class="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors">Inicio</a>
-            <a href="{{ url('/products') }}" class="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors">Productos</a>
-    
-            <a href="{{ url('/page/categories') }}" class="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors">Categorías</a>
-    
-            <a href="{{ url('/page/ofertas') }}" class="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors flex items-center gap-1">
-                Ofertas 
-                <span class="bg-orange-100 text-orange-600 text-[10px] px-1.5 py-0.5 rounded-full uppercase font-bold">Hot</span>
+        {{-- Nav links --}}
+        <nav style="display:flex; align-items:center; gap:10px;" aria-label="Navegación principal">
+
+            <a href="{{ route('shop.home.index') }}" class="kv-nav-item">Inicio</a>
+
+            <a href="{{ url('/products') }}" class="kv-nav-item">Productos</a>
+
+            <a href="{{ url('/page/categories') }}" class="kv-nav-item">Categorías</a>
+
+            <a href="{{ url('/page/ofertas') }}" class="kv-nav-item">
+                Ofertas
+                <span class="kv-badge-hot">Hot</span>
             </a>
-            <a href="{{ url('/page/contacto') }}" class="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors">Contacto</a>
-        </div>
+
+            <a href="{{ url('/contact-us') }}" class="kv-nav-item">Contacto</a>
+
+        </nav>
 
         {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.category.after') !!}
     </div>
 
-    <!-- Right Nagivation Section -->
-    <div class="flex items-center gap-x-9 max-[1100px]:gap-x-6 max-lg:gap-x-8">
+
+    {{-- ══════════════════════════════════════════
+         DERECHA: Buscador + Acciones
+    ══════════════════════════════════════════ --}}
+    <div style="display:flex; align-items:center; gap:12px;">
 
         {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.search_bar.before') !!}
 
-        <!-- Search Bar Container -->
-        <div class="relative w-full">
-            <form
-                action="{{ route('shop.search.index') }}"
-                class="flex max-w-[445px] items-center"
-                role="search"
+        {{-- Buscador --}}
+        <form action="{{ route('shop.search.index') }}"
+              style="position:relative; display:flex; align-items:center;"
+              role="search">
+
+            <label for="organic-search-desktop" class="sr-only">
+                @lang('shop::app.components.layouts.header.search')
+            </label>
+
+            {{-- Icono lupa --}}
+            <span class="icon-search" style="
+                position:absolute;
+                left:12px;
+                top:50%;
+                transform:translateY(-50%);
+                font-size:16px;
+                color:#9ca3af;
+                pointer-events:none;
+                z-index:1;
+            "></span>
+
+            <input
+                type="text"
+                id="organic-search-desktop"
+                name="query"
+                value="{{ request('query') }}"
+                placeholder="@lang('shop::app.components.layouts.header.search-text')"
+                aria-label="@lang('shop::app.components.layouts.header.search-text')"
+                aria-required="true"
+                required
+                minlength="{{ core()->getConfigData('catalog.products.search.min_query_length') }}"
+                maxlength="{{ core()->getConfigData('catalog.products.search.max_query_length') }}"
+                style="
+                    width: 260px;
+                    padding: 9px 16px 9px 38px;
+                    border-radius: 9999px;
+                    border: 1.5px solid #e5e7eb;
+                    background-color: #f9fafb;
+                    font-size: 13px;
+                    font-weight: 500;
+                    color: #111827;
+                    outline: none;
+                    transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+                "
+                onfocus="
+                    this.style.borderColor='#6366f1';
+                    this.style.backgroundColor='#fff';
+                    this.style.boxShadow='0 0 0 3px rgba(99,102,241,0.12)';
+                "
+                onblur="
+                    this.style.borderColor='#e5e7eb';
+                    this.style.backgroundColor='#f9fafb';
+                    this.style.boxShadow='none';
+                "
             >
-                <label
-                    for="organic-search-desktop"
-                    class="sr-only"
-                >
-                    @lang('shop::app.components.layouts.header.search')
-                </label>
 
-                <div class="icon-search pointer-events-none absolute top-2.5 flex items-center text-xl ltr:left-3 rtl:right-3"></div>
+            <button type="submit" style="display:none;"
+                    aria-label="@lang('shop::app.components.layouts.header.submit')"></button>
 
-                <input
-                    type="text"
-                    id="organic-search-desktop"
-                    name="query"
-                    value="{{ request('query') }}"
-                    class="block w-full rounded-lg border border-transparent bg-zinc-100 px-11 py-3 text-xs font-medium text-gray-900 transition-all hover:border-gray-400 focus:border-gray-400"
-                    minlength="{{ core()->getConfigData('catalog.products.search.min_query_length') }}"
-                    maxlength="{{ core()->getConfigData('catalog.products.search.max_query_length') }}"
-                    placeholder="@lang('shop::app.components.layouts.header.search-text')"
-                    aria-label="@lang('shop::app.components.layouts.header.search-text')"
-                    aria-required="true"
-                    required
-                >
-
-                <button
-                    type="submit"
-                    class="hidden"
-                    aria-label="@lang('shop::app.components.layouts.header.submit')"
-                >
-                </button>
-
-                @if (core()->getConfigData('catalog.products.settings.image_search'))
-                    @include('shop::search.images.index')
-                @endif
-            </form>
-        </div>
+            @if (core()->getConfigData('catalog.products.settings.image_search'))
+                @include('shop::search.images.index')
+            @endif
+        </form>
 
         {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.search_bar.after') !!}
 
-        <!-- Right Navigation Links -->
-        <div class="mt-1.5 flex gap-x-8 max-[1100px]:gap-x-6 max-lg:gap-x-8">
+        {{-- Acciones: Compare + Cart + User ──────── --}}
+        <div style="display:flex; align-items:center; gap:4px;">
 
             {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.compare.before') !!}
 
-            <!-- Compare -->
             @if(core()->getConfigData('catalog.products.settings.compare_option'))
-                <a
-                    href="{{ route('shop.compare.index') }}"
-                    aria-label="@lang('shop::app.components.layouts.header.compare')"
-                >
-                    <span
-                        class="icon-compare inline-block cursor-pointer text-2xl"
-                        role="presentation"
-                    ></span>
+                <a href="{{ route('shop.compare.index') }}"
+                   class="kv-action-btn"
+                   aria-label="@lang('shop::app.components.layouts.header.compare')">
+                    <span class="icon-compare" style="font-size:22px;" role="presentation"></span>
                 </a>
             @endif
 
@@ -113,7 +229,6 @@
 
             {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.mini_cart.before') !!}
 
-            <!-- Mini cart -->
             @if(core()->getConfigData('sales.checkout.shopping_cart.cart_page'))
                 @include('shop::checkout.cart.mini-cart')
             @endif
@@ -122,51 +237,71 @@
 
             {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.profile.before') !!}
 
-            <!-- user profile -->
+            {{-- Dropdown usuario --}}
             <x-shop::dropdown position="bottom-{{ core()->getCurrentLocale()->direction === 'ltr' ? 'right' : 'left' }}">
                 <x-slot:toggle>
-                    <span
-                        class="icon-users inline-block cursor-pointer text-2xl"
-                        role="button"
-                        aria-label="@lang('shop::app.components.layouts.header.profile')"
-                        tabindex="0"
-                    ></span>
+                    <span class="icon-users kv-action-btn"
+                          style="font-size:22px;"
+                          role="button"
+                          aria-label="@lang('shop::app.components.layouts.header.profile')"
+                          tabindex="0"></span>
                 </x-slot>
 
-                <!-- Guest Dropdown -->
+                {{-- Guest --}}
                 @guest('customer')
                     <x-slot:content>
-                        <div class="grid gap-2.5">
-                            <p class="font-dmserif text-xl">
-                                @lang('shop::app.components.layouts.header.welcome-guest')
-                            </p>
-
-                            <p class="text-sm">
-                                @lang('shop::app.components.layouts.header.dropdown-text')
-                            </p>
-                        </div>
-
-                        <p class="py-2px mt-3 w-full border border-zinc-200"></p>
+                        <p class="font-dmserif" style="font-size:20px; color:#111827; margin-bottom:6px;">
+                            @lang('shop::app.components.layouts.header.welcome-guest')
+                        </p>
+                        <p style="font-size:13px; color:#6b7280; margin-bottom:0;">
+                            @lang('shop::app.components.layouts.header.dropdown-text')
+                        </p>
+                        <hr style="margin:14px 0; border:none; border-top:1px solid #f3f4f6;">
 
                         {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.customers_action.before') !!}
-                        
-                        <div class="mt-6 flex gap-4">
+
+                        <div style="display:flex; gap:10px; margin-top:4px;">
                             {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.sign_in_button.before') !!}
 
-                            <a
-                                href="{{ route('shop.customer.session.create') }}"
-                                class="primary-button m-0 mx-auto block w-max rounded-2xl px-7 text-center text-base max-md:rounded-lg ltr:ml-0 rtl:mr-0"
-                            >
+                            <a href="{{ route('shop.customer.session.create') }}"
+                               style="
+                                   display:inline-block;
+                                   padding: 8px 20px;
+                                   border-radius: 9999px;
+                                   border: 1.5px solid #6366f1;
+                                   color: #6366f1;
+                                   font-size: 13px;
+                                   font-weight: 600;
+                                   text-align:center;
+                                   text-decoration:none;
+                                   white-space:nowrap;
+                                   transition: all 0.25s ease;
+                               "
+                               onmouseover="this.style.backgroundColor='#6366f1'; this.style.color='#fff';"
+                               onmouseout="this.style.backgroundColor='transparent'; this.style.color='#6366f1';">
                                 @lang('shop::app.components.layouts.header.sign-in')
                             </a>
 
-                            <a
-                                href="{{ route('shop.customers.register.index') }}"
-                                class="secondary-button m-0 mx-auto block w-max rounded-2xl border-2 px-7 text-center text-base max-md:rounded-lg max-md:py-3 ltr:ml-0 rtl:mr-0"
-                            >
+                            <a href="{{ route('shop.customers.register.index') }}"
+                               style="
+                                   display:inline-block;
+                                   padding: 8px 20px;
+                                   border-radius: 9999px;
+                                   background: linear-gradient(135deg, #6366f1, #22d3ee);
+                                   color: #fff;
+                                   font-size: 13px;
+                                   font-weight: 600;
+                                   text-align:center;
+                                   text-decoration:none;
+                                   white-space:nowrap;
+                                   box-shadow: 0 4px 14px rgba(99,102,241,0.3);
+                                   transition: all 0.25s ease;
+                               "
+                               onmouseover="this.style.transform='scale(1.04)'; this.style.boxShadow='0 6px 20px rgba(99,102,241,0.4)';"
+                               onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 14px rgba(99,102,241,0.3)';">
                                 @lang('shop::app.components.layouts.header.sign-up')
                             </a>
-                            
+
                             {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.sign_up_button.after') !!}
                         </div>
 
@@ -174,61 +309,53 @@
                     </x-slot>
                 @endguest
 
-                <!-- Customers Dropdown -->
+                {{-- Autenticado --}}
                 @auth('customer')
                     <x-slot:content class="!p-0">
-                        <div class="grid gap-2.5 p-5 pb-0">
-                            <p class="font-dmserif text-xl">
-                                @lang('shop::app.components.layouts.header.welcome')’
+                        <div style="padding:20px 20px 0;">
+                            <p class="font-dmserif" style="font-size:20px; color:#111827; margin-bottom:6px;">
+                                @lang('shop::app.components.layouts.header.welcome')'
                                 {{ auth()->guard('customer')->user()->first_name }}
                             </p>
-
-                            <p class="text-sm">
+                            <p style="font-size:13px; color:#6b7280;">
                                 @lang('shop::app.components.layouts.header.dropdown-text')
                             </p>
                         </div>
+                        <hr style="margin:12px 0; border:none; border-top:1px solid #f3f4f6;">
 
-                        <p class="py-2px mt-3 w-full border border-zinc-200"></p>
-
-                        <div class="mt-2.5 grid gap-1 pb-2.5">
+                        <div style="padding-bottom:10px;">
                             {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.profile_dropdown.links.before') !!}
 
-                            <a
-                                class="cursor-pointer px-5 py-2 text-base hover:bg-gray-100"
-                                href="{{ route('shop.customers.account.profile.index') }}"
-                            >
-                                @lang('shop::app.components.layouts.header.profile')
-                            </a>
-
-                            <a
-                                class="cursor-pointer px-5 py-2 text-base hover:bg-gray-100"
-                                href="{{ route('shop.customers.account.orders.index') }}"
-                            >
-                                @lang('shop::app.components.layouts.header.orders')
-                            </a>
+                            @foreach([
+                                ['route' => 'shop.customers.account.profile.index', 'label' => 'shop::app.components.layouts.header.profile'],
+                                ['route' => 'shop.customers.account.orders.index',  'label' => 'shop::app.components.layouts.header.orders'],
+                            ] as $link)
+                                <a href="{{ route($link['route']) }}"
+                                   style="display:block; padding:9px 20px; font-size:13px; font-weight:500; color:#374151; text-decoration:none; transition:all 0.15s;"
+                                   onmouseover="this.style.backgroundColor='rgba(99,102,241,0.05)'; this.style.color='#6366f1';"
+                                   onmouseout="this.style.backgroundColor=''; this.style.color='#374151';">
+                                    @lang($link['label'])
+                                </a>
+                            @endforeach
 
                             @if (core()->getConfigData('customer.settings.wishlist.wishlist_option'))
-                                <a
-                                    class="cursor-pointer px-5 py-2 text-base hover:bg-gray-100"
-                                    href="{{ route('shop.customers.account.wishlist.index') }}"
-                                >
+                                <a href="{{ route('shop.customers.account.wishlist.index') }}"
+                                   style="display:block; padding:9px 20px; font-size:13px; font-weight:500; color:#374151; text-decoration:none; transition:all 0.15s;"
+                                   onmouseover="this.style.backgroundColor='rgba(99,102,241,0.05)'; this.style.color='#6366f1';"
+                                   onmouseout="this.style.backgroundColor=''; this.style.color='#374151';">
                                     @lang('shop::app.components.layouts.header.wishlist')
                                 </a>
                             @endif
 
-                            <!--Customers logout-->
                             @auth('customer')
-                                <x-shop::form
-                                    method="DELETE"
-                                    action="{{ route('shop.customer.session.destroy') }}"
-                                    id="customerLogout"
-                                />
-
-                                <a
-                                    class="cursor-pointer px-5 py-2 text-base hover:bg-gray-100"
-                                    href="{{ route('shop.customer.session.destroy') }}"
-                                    onclick="event.preventDefault(); document.getElementById('customerLogout').submit();"
-                                >
+                                <x-shop::form method="DELETE"
+                                              action="{{ route('shop.customer.session.destroy') }}"
+                                              id="customerLogout" />
+                                <a href="{{ route('shop.customer.session.destroy') }}"
+                                   style="display:block; padding:9px 20px; font-size:13px; font-weight:500; color:#ef4444; text-decoration:none; transition:all 0.15s; cursor:pointer;"
+                                   onmouseover="this.style.backgroundColor='rgba(239,68,68,0.05)';"
+                                   onmouseout="this.style.backgroundColor='';"
+                                   onclick="event.preventDefault(); document.getElementById('customerLogout').submit();">
                                     @lang('shop::app.components.layouts.header.logout')
                                 </a>
                             @endauth
@@ -243,126 +370,5 @@
         </div>
     </div>
 </div>
-
-@pushOnce('scripts')
-    <script
-        type="text/x-template"
-        id="v-desktop-category-template"
-    >
-        <div
-            class="flex items-center gap-5"
-            v-if="isLoading"
-        >
-            <span
-                class="shimmer h-6 w-20 rounded"
-                role="presentation"
-            ></span>
-
-            <span
-                class="shimmer h-6 w-20 rounded"
-                role="presentation"
-            ></span>
-
-            <span
-                class="shimmer h-6 w-20 rounded"
-                role="presentation"
-            ></span>
-        </div>
-
-        <div
-            class="flex items-center"
-            v-else
-        >
-            <div
-                class="group relative flex h-[77px] items-center border-b-4 border-transparent hover:border-b-4 hover:border-navyBlue"
-                v-for="category in categories"
-            >
-                <span>
-                    <a
-                        :href="category.url"
-                        class="inline-block px-5 uppercase"
-                    >
-                        @{{ category.name }}
-                    </a>
-                </span>
-
-                <div
-                    class="pointer-events-none absolute top-[78px] z-[1] max-h-[580px] w-max max-w-[1260px] translate-y-1 overflow-auto overflow-x-auto border border-b-0 border-l-0 border-r-0 border-t border-[#F3F3F3] bg-white p-9 opacity-0 shadow-[0_6px_6px_1px_rgba(0,0,0,.3)] transition duration-300 ease-out group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100 group-hover:duration-200 group-hover:ease-in ltr:-left-9 rtl:-right-9"
-                    v-if="category.children.length"
-                >
-                    <div class="aigns flex justify-between gap-x-[70px]">
-                        <div
-                            class="grid w-full min-w-max max-w-[150px] flex-auto grid-cols-[1fr] content-start gap-5"
-                            v-for="pairCategoryChildren in pairCategoryChildren(category)"
-                        >
-                            <template v-for="secondLevelCategory in pairCategoryChildren">
-                                <p class="font-medium text-navyBlue">
-                                    <a :href="secondLevelCategory.url">
-                                        @{{ secondLevelCategory.name }}
-                                    </a>
-                                </p>
-
-                                <ul
-                                    class="grid grid-cols-[1fr] gap-3"
-                                    v-if="secondLevelCategory.children.length"
-                                >
-                                    <li
-                                        class="text-sm font-medium text-zinc-500"
-                                        v-for="thirdLevelCategory in secondLevelCategory.children"
-                                    >
-                                        <a :href="thirdLevelCategory.url">
-                                            @{{ thirdLevelCategory.name }}
-                                        </a>
-                                    </li>
-                                </ul>
-                            </template>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </script>
-
-    <script type="module">
-        app.component('v-desktop-category', {
-            template: '#v-desktop-category-template',
-
-            data() {
-                return  {
-                    isLoading: true,
-
-                    categories: [],
-                }
-            },
-
-            mounted() {
-                this.get();
-            },
-
-            methods: {
-                get() {
-                    this.$axios.get("{{ route('shop.api.categories.tree') }}")
-                        .then(response => {
-                            this.isLoading = false;
-
-                            this.categories = response.data.data;
-                        }).catch(error => {
-                            console.log(error);
-                        });
-                },
-
-                pairCategoryChildren(category) {
-                    return category.children.reduce((result, value, index, array) => {
-                        if (index % 2 === 0) {
-                            result.push(array.slice(index, index + 2));
-                        }
-
-                        return result;
-                    }, []);
-                }
-            },
-        });
-    </script>
-@endPushOnce
 
 {!! view_render_event('bagisto.shop.components.layouts.header.desktop.bottom.after') !!}

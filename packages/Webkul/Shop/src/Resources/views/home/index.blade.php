@@ -16,7 +16,13 @@
     <x-slot:title>
         {{  $channel->home_seo['meta_title'] ?? '' }}
     </x-slot>
-    
+
+
+        {{-- Tu banner fijo aquí arriba --}}
+    <div class="mi-banner-personalizado">
+        <h1>Bienvenido a KillaVibes</h1>
+    </div>
+
     <!-- Loop over the theme customization -->
     @foreach ($customizations as $customization)
         @php ($data = $customization->options) @endphp
