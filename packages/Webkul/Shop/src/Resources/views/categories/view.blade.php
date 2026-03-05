@@ -1,12 +1,14 @@
+<!--- view.blade.php  -->
+
 <!-- SEO Meta Content -->
 @push('meta')
-    <meta 
-        name="description" 
+    <meta
+        name="description"
         content="{{ trim($category->meta_description) != "" ? $category->meta_description : \Illuminate\Support\Str::limit(strip_tags($category->description), 120, '') }}"
     />
 
-    <meta 
-        name="keywords" 
+    <meta
+        name="keywords"
         content="{{ $category->meta_keywords }}"
     />
 
@@ -20,8 +22,10 @@
 <x-shop::layouts>
     <!-- Page Title -->
     <x-slot:title>
+
         {{ trim($category->meta_title) != "" ? $category->meta_title : $category->name }}
     </x-slot>
+
 
     {!! view_render_event('bagisto.shop.categories.view.banner_path.before') !!}
 
@@ -51,7 +55,7 @@
             </div>
         @endif
     @endif
-        
+
     {!! view_render_event('bagisto.shop.categories.view.description.after') !!}
 
     @if (in_array($category->display_mode, [null, 'products_only', 'products_and_description']))
@@ -63,8 +67,8 @@
     @endif
 
     @pushOnce('scripts')
-        <script 
-            type="text/x-template" 
+        <script
+            type="text/x-template"
             id="v-category-template"
         >
             <div class="container px-[60px] max-lg:px-8 max-md:px-4">
@@ -108,7 +112,7 @@
                                             src="{{ bagisto_asset('images/thank-you.png') }}"
                                             alt="@lang('shop::app.categories.view.empty')"
                                         />
-                                  
+
                                         <p
                                             class="text-xl max-md:text-sm"
                                             role="heading"
@@ -152,7 +156,7 @@
                                             src="{{ bagisto_asset('images/thank-you.png') }}"
                                             alt="@lang('shop::app.categories.view.empty')"
                                         />
-                                        
+
                                         <p
                                             class="text-xl max-md:text-sm"
                                             role="heading"
@@ -207,13 +211,13 @@
 
                         isDrawerActive: {
                             toolbar: false,
-                            
+
                             filter: false,
                         },
 
                         filters: {
                             toolbar: {},
-                            
+
                             filter: {},
                         },
 
@@ -259,14 +263,14 @@
                     getProducts() {
                         this.isDrawerActive = {
                             toolbar: false,
-                            
+
                             filter: false,
                         };
 
                         document.body.style.overflow ='scroll';
 
                         this.$axios.get("{{ route('shop.api.products.index', ['category_id' => $category->id]) }}", {
-                            params: this.queryParams 
+                            params: this.queryParams
                         })
                             .then(response => {
                                 this.isLoading = false;

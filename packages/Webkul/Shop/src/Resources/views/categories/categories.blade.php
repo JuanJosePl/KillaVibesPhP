@@ -6,6 +6,7 @@
 
 @section('content-wrapper')
     <div style="max-width: 1200px; margin: 40px auto; padding: 0 20px;">
+        
         <h1 style="text-align: center; text-transform: uppercase; font-weight: 900; font-size: 2.5rem; margin-bottom: 40px;">Categorías</h1>
 
         {{-- Grid Manual para asegurar 3 columnas --}}

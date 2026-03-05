@@ -18,10 +18,8 @@ require 'customer-routes.php';
 require 'checkout-routes.php';
 
 
-Route::group(['middleware' => ['web']], function () {
-
-    Route::get('/cookies', function () {
-        return view('shop::pages.cookies');
-    })->name('shop.cookies.index');
-
+Route::group(['middleware' => ['locale', 'theme', 'currency']], function () {
+    Route::get('/collections', function () {
+        return view('shop::categories.collections');
+    })->name('shop.collections');
 });

@@ -81,6 +81,7 @@
     </head>
 
     <body>
+
         @if (core()->getConfigData('general.general.whatsapp.number'))
             <x-shop::whatsapp />
         @endif

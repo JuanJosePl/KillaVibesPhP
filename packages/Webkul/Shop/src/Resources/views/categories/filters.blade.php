@@ -1,3 +1,5 @@
+<-- filters.blade.php --- >
+
 {!!view_render_event('bagisto.shop.categories.view.filters.before') !!}
 
 <!-- Desktop Filters Naviation -->
@@ -267,7 +269,7 @@
             methods: {
                 getFilters() {
                     this.$axios.get('{{ route("shop.api.categories.attributes") }}', {
-                            params: { 
+                            params: {
                                 category_id: "{{ isset($category) ? $category->id : ''  }}",
                             }
                         })
