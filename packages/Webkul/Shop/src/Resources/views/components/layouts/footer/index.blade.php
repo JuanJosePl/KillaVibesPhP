@@ -109,9 +109,7 @@
                 </h3>
 
                 <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.9rem;">
-                    <li><a href="{{ url('/products') }}" style="text-decoration:none;color:#64748b;font-size:.875rem;">Productos</a></li>
-                    <li><a href="{{ url('/page/categories') }}" style="text-decoration:none;color:#64748b;font-size:.875rem;">Categorías</a></li>
-                    <li><a href="{{ url('/page/ofertas') }}" style="text-decoration:none;color:#64748b;font-size:.875rem;">Ofertas</a></li>
+                    <li><a href="{{ url('/collections') }}" style="text-decoration:none;color:#64748b;font-size:.875rem;">Categorías</a></li>
                     <li><a href="{{ url('/about-us') }}" style="text-decoration:none;color:#64748b;font-size:.875rem;">Sobre Nosotros</a></li>
                 </ul>
 

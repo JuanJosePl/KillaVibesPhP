@@ -122,13 +122,7 @@
 
             <a href="{{ route('shop.home.index') }}" class="kv-nav-item">Inicio</a>
 
-            <a href="{{ url('/products') }}" class="kv-nav-item">Productos</a>
-
-            <a href="{{ url('/page/categories') }}" class="kv-nav-item">Categorías</a>
-
-            <a href="{{ url('/page/ofertas') }}" class="kv-nav-item">
-                Ofertas
-                <span class="kv-badge-hot">Hot</span>
+            <a href="{{ url('/collections') }}" class="kv-nav-item">Categorías</a>
             </a>
 
             <a href="{{ url('/contact-us') }}" class="kv-nav-item">Contacto</a>

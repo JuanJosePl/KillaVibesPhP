@@ -1,3 +1,5 @@
+<!--- index.blade.php = Home pagina -->
+
 @php
     $channel = core()->getCurrentChannel();
 
