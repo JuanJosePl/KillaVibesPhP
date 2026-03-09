@@ -1,7 +1,15 @@
 {!! view_render_event('bagisto.shop.layout.footer.before') !!}
 
+<!--
+    The category repository is injected directly here because there is no way
+    to retrieve it from the view composer, as this is an anonymous component.
+-->
 @inject('themeCustomizationRepository', 'Webkul\Theme\Repositories\ThemeCustomizationRepository')
 
+<!--
+    This code needs to be refactored to reduce the amount of PHP in the Blade
+    template as much as possible.
+-->
 @php
     $customization = $themeCustomizationRepository->findOneWhere([
         'type'       => 'footer_links',
@@ -10,214 +18,134 @@
     ]);
 @endphp
 
-{{-- =====================================================================
-     FOOTER KILLAVIBES — 100% INLINE STYLES
-     Sin dependencia de clases externas. Todo el CSS va aquí mismo.
-====================================================================== --}}
+<footer class="mt-9 bg-lightOrange max-sm:mt-10">
+    <div class="flex justify-between gap-x-6 gap-y-8 p-[60px] max-1060:flex-col-reverse max-md:gap-5 max-md:p-8 max-sm:px-4 max-sm:py-5">
+        <!-- For Desktop View -->
+        <div class="flex flex-wrap items-start gap-24 max-1180:gap-6 max-1060:hidden">
+            @if ($customization?->options)
+                @foreach ($customization->options as $footerLinkSection)
+                    <ul class="grid gap-5 text-sm">
+                        @php
+                            usort($footerLinkSection, function ($a, $b) {
+                                return $a['sort_order'] - $b['sort_order'];
+                            });
+                        @endphp
 
-<style>
-@keyframes kvf-float  { 0%,100%{transform:translateY(0)}  50%{transform:translateY(-14px)} }
-@keyframes kvf-pulse  { 0%,100%{opacity:1}                50%{opacity:0.55} }
-@keyframes kvf-heart  { 0%,100%{transform:scale(1)}        50%{transform:scale(1.35)} }
-
-.kvf-social-btn:hover            { transform:scale(1.12)!important; box-shadow:0 6px 20px rgba(99,102,241,.22)!important; background:rgba(99,102,241,.09)!important; border-color:rgba(99,102,241,.35)!important; color:#6366f1!important; }
-.kvf-social-btn.s-ig:hover       { color:#ec4899!important; background:rgba(236,72,153,.08)!important; border-color:rgba(236,72,153,.3)!important; }
-.kvf-social-btn.s-fb:hover       { color:#2563eb!important; background:rgba(37,99,235,.08)!important;  border-color:rgba(37,99,235,.3)!important; }
-.kvf-social-btn.s-tt:hover       { color:#111!important;    background:rgba(0,0,0,.06)!important;       border-color:rgba(0,0,0,.15)!important; }
-.kvf-social-btn.s-wa:hover       { color:#16a34a!important; background:rgba(22,163,74,.08)!important;  border-color:rgba(22,163,74,.3)!important; }
-
-.kvf-feat-row:hover              { color:#6366f1!important; }
-.kvf-feat-row:hover .kvf-fi      { background:rgba(99,102,241,.20)!important; }
-
-.kvf-lnk:hover                   { color:#6366f1!important; }
-.kvf-lnk:hover .kvf-dot          { background:#6366f1!important; }
-
-.kvf-ci:hover                    { color:#6366f1!important; }
-.kvf-ci:hover .kvf-cicon         { background:rgba(99,102,241,.20)!important; }
-
-.kvf-legal-a:hover               { color:#6366f1!important; }
-
-.kvf-nl-btn:hover                { transform:translateY(-50%) scale(1.04)!important; box-shadow:0 4px 16px rgba(99,102,241,.40)!important; }
-.kvf-nl-input:focus              { border-color:#6366f1!important; background:#fff!important; box-shadow:0 0 0 3px rgba(99,102,241,.12)!important; }
-
-/* Responsive: en mobile el grid es 1 col */
-@media (max-width:767px) {
-    .kvf-main-grid   { grid-template-columns:1fr!important; }
-    .kvf-bottom-row  { flex-direction:column!important; align-items:center!important; text-align:center!important; }
-    .kvf-desktop-col { display:none!important; }
-    .kvf-mob-acc     { display:block!important; }
-}
-@media (min-width:768px) and (max-width:1059px) {
-    .kvf-main-grid   { grid-template-columns:1fr 1fr!important; }
-    .kvf-desktop-col { display:none!important; }
-    .kvf-mob-acc     { display:block!important; }
-}
-@media (min-width:1060px) {
-    .kvf-main-grid   { grid-template-columns:2fr 1fr 1fr 1fr!important; }
-    .kvf-desktop-col { display:block!important; }
-    .kvf-mob-acc     { display:none!important; }
-}
-</style>
-
-<footer style="
-    position:relative;
-    overflow:hidden;
-    background:linear-gradient(to bottom,rgba(241,245,249,.35),rgba(241,245,249,.6));
-    border-top:1px solid rgba(226,232,240,.6);
-    margin-top:0;
-    font-family:'Poppins',system-ui,sans-serif;
-">
-
-<div style="max-width:1280px;margin:0 auto;padding:0 2.5rem;position:relative;z-index:10;">
-
-    {{-- ===================== MAIN GRID ===================== --}}
-    <div style="padding:5rem 0 4rem 0;">
-
-        <div class="kvf-main-grid" style="
-            display:grid;
-            grid-template-columns:2fr 1fr 1fr 1fr;
-            column-gap:2.5rem;
-            row-gap:2rem;
-            align-items:start;
-        ">
-
-            {{-- ================= BRAND COLUMN ================= --}}
-            <div style="display:flex;flex-direction:column;gap:1.75rem;">
-
-                {{-- Logo --}}
-                <a href="{{ route('shop.home.index') }}" style="display:inline-flex;align-items:center;gap:.75rem;text-decoration:none;">
-                    <img src="{{ core()->getCurrentChannel()->logo_url ?? bagisto_asset('images/logo.svg') }}"
-                         style="height:2.5rem;width:auto;display:block;">
-                    <span style="font-size:1.5rem;font-weight:800;background:linear-gradient(135deg,#6366f1,#22d3ee);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">
-                        {{ config('app.name','KillaVibes') }}
-                    </span>
-                </a>
-
-                {{-- Description --}}
-                <p style="color:#64748b;line-height:1.7;font-size:.875rem;max-width:22rem;margin:0;">
-                    Tu tienda de confianza en Barranquilla para tecnología de calidad.
-                    Productos originales, envíos rápidos y atención personalizada 24/7.
-                </p>
-
-            </div>
-
-            {{-- ================= COLUMN 2 ================= --}}
-            <div style="display:flex;flex-direction:column;">
-
-                <h3 style="font-size:1rem;font-weight:700;color:#1a1c2d;margin:0 0 1.5rem 0;">
-                    Contenido
-                </h3>
-
-                <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.9rem;">
-                    <li><a href="{{ url('/collections') }}" style="text-decoration:none;color:#64748b;font-size:.875rem;">Categorías</a></li>
-                    <li><a href="{{ url('/about-us') }}" style="text-decoration:none;color:#64748b;font-size:.875rem;">Sobre Nosotros</a></li>
-                </ul>
-
-            </div>
-
-            {{-- ================= COLUMN 3 ================= --}}
-            <div style="display:flex;flex-direction:column;">
-
-                <h3 style="font-size:1rem;font-weight:700;color:#1a1c2d;margin:0 0 1.5rem 0;">
-                    Atención al Cliente
-                </h3>
-
-                <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.9rem;">
-                    <li><a href="{{ url('/contact-us') }}" style="text-decoration:none;color:#64748b;font-size:.875rem;">Contacto</a></li>
-                    <li><a href="{{ url('/page/envios') }}" style="text-decoration:none;color:#64748b;font-size:.875rem;">Envíos</a></li>
-                    <li><a href="{{ url('/page/devoluciones') }}" style="text-decoration:none;color:#64748b;font-size:.875rem;">Devoluciones</a></li>
-                    <li><a href="{{ url('/page/garantia') }}" style="text-decoration:none;color:#64748b;font-size:.875rem;">Garantía</a></li>
-                </ul>
-
-            </div>
-
-            {{-- ================= COLUMN 4 ================= --}}
-            <div style="display:flex;flex-direction:column;">
-
-                <h3 style="font-size:1rem;font-weight:700;color:#1a1c2d;margin:0 0 1.5rem 0;">
-                    Contacto
-                </h3>
-
-                <div style="display:flex;flex-direction:column;gap:1rem;font-size:.875rem;color:#64748b;">
-                    <span>Barranquilla, Colombia</span>
-                    <span>+57 300 252 1314</span>
-                    <span>info@killavibes.com</span>
-                    <span>Atención 24/7</span>
-                </div>
-
-            </div>
-
+                        @foreach ($footerLinkSection as $link)
+                            <li>
+                                <a href="{{ $link['url'] }}">
+                                    {{ $link['title'] }}
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                @endforeach
+            @endif
         </div>
-    </div>
 
-    {{-- ================= NEWSLETTER ================= --}}
-    <div style="
-        padding:3rem 0;
-        border-top:1px solid rgba(226,232,240,.6);
-        border-bottom:1px solid rgba(226,232,240,.6);
-        display:flex;
-        justify-content:flex-start;
-    ">
+        <!-- For Mobile view -->
+        <x-shop::accordion
+            :is-active="false"
+            class="hidden !w-full rounded-xl !border-2 !border-[#e9decc] max-1060:block max-sm:rounded-lg"
+        >
+            <x-slot:header class="rounded-t-lg bg-[#F1EADF] font-medium max-md:p-2.5 max-sm:px-3 max-sm:py-2 max-sm:text-sm">
+                @lang('shop::app.components.layouts.footer.footer-content')
+            </x-slot>
 
-        <div style="max-width:500px;width:100%;">
+            <x-slot:content class="flex justify-between !bg-transparent !p-4">
+                @if ($customization?->options)
+                    @foreach ($customization->options as $footerLinkSection)
+                        <ul class="grid gap-5 text-sm">
+                            @php
+                                usort($footerLinkSection, function ($a, $b) {
+                                    return $a['sort_order'] - $b['sort_order'];
+                                });
+                            @endphp
 
-            <p style="font-size:1.5rem;font-weight:700;color:#1a1c2d;margin:0 0 .75rem 0;">
-                Suscríbete a nuestro Newsletter
-            </p>
+                            @foreach ($footerLinkSection as $link)
+                                <li>
+                                    <a
+                                        href="{{ $link['url'] }}"
+                                        class="text-sm font-medium max-sm:text-xs">
+                                        {{ $link['title'] }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endforeach
+                @endif
+            </x-slot>
+        </x-shop::accordion>
 
-            <p style="font-size:.85rem;color:#64748b;margin:0 0 1.25rem 0;">
-                Recibe ofertas y novedades directamente en tu correo.
-            </p>
+        <!-- Social Media -->
+        <x-shop::social-media />
 
-            <div style="position:relative;width:100%;">
-                <input type="email"
-                       placeholder="email@example.com"
-                       style="
-                           width:100%;
-                           padding:.9rem 1.25rem;
-                           padding-right:8rem;
-                           border-radius:9999px;
-                           border:1.5px solid rgba(226,232,240,.9);
-                           font-size:.875rem;
-                       ">
-                <button style="
-                    position:absolute;
-                    right:5px;
-                    top:50%;
-                    transform:translateY(-50%);
-                    padding:.6rem 1.2rem;
-                    border-radius:9999px;
-                    border:none;
-                    background:linear-gradient(135deg,#6366f1,#22d3ee);
-                    color:white;
-                    font-size:.8rem;
-                    font-weight:700;
-                    cursor:pointer;
-                ">
-                    Suscribirme
-                </button>
-            </div>
+        {!! view_render_event('bagisto.shop.layout.footer.newsletter_subscription.before') !!}
 
-        </div>
-    </div>
-
-    {{-- ================= BOTTOM BAR ================= --}}
-    <div style="padding:1.75rem 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
-
-        <p style="font-size:.875rem;color:#64748b;margin:0;">
-            © {{ date('Y') }} {{ config('app.name','KillaVibes') }}. Todos los derechos reservados.
+        <!-- News Letter subscription -->
+        @if (core()->getConfigData('customer.settings.newsletter.subscription'))
+    <div class="grid gap-2.5">
+        <p
+            id="newsletter-heading"
+            class="max-w-[288px] text-3xl italic leading-[45px] text-navyBlue max-md:text-2xl max-sm:text-lg"
+            role="heading"
+            aria-level="2"
+        >
+            @lang('shop::app.components.layouts.footer.newsletter-text')
         </p>
 
-        <div style="display:flex;gap:1.25rem;flex-wrap:wrap;">
-            <a href="{{ url('/terminos') }}" style="font-size:.75rem;color:#64748b;text-decoration:none;">Términos</a>
-            <a href="{{ url('/privacidad') }}" style="font-size:.75rem;color:#64748b;text-decoration:none;">Privacidad</a>
-            <a href="{{ url('/cookies') }}" style="font-size:.75rem;color:#64748b;text-decoration:none;">Cookies</a>
-            <a href="{{ url('/faq') }}" style="font-size:.75rem;color:#64748b;text-decoration:none;">FAQ</a>
-        </div>
+        <p class="text-xs">
+            @lang('shop::app.components.layouts.footer.subscribe-stay-touch')
+        </p>
 
+        <div>
+            <x-shop::form
+                :action="route('shop.subscription.store')"
+                class="mt-2.5 rounded max-sm:mt-0"
+            >
+                <div class="relative w-full">
+                    <label for="footer-newsletter-input" class="sr-only">
+                        @lang('shop::app.components.layouts.footer.email')
+                    </label>
+
+                    <x-shop::form.control-group.control
+                        type="email"
+                        id="footer-newsletter-input" 
+                        name="email"
+                        class="block w-[420px] max-w-full rounded-xl border-2 border-[#e9decc] bg-[#F1EADF] px-5 py-4 text-base max-1060:w-full max-md:p-3.5 max-sm:mb-0 max-sm:rounded-lg max-sm:border-2 max-sm:p-2 max-sm:text-sm"
+                        rules="required|email"
+                        :label="trans('shop::app.components.layouts.footer.email')"
+                        placeholder="email@example.com"
+                        autocomplete="email" 
+                        aria-labelledby="newsletter-heading"
+                    />
+
+                    <x-shop::form.control-group.error control-name="email" />
+
+                    <button
+                        type="submit"
+                        class="absolute top-1.5 flex w-max items-center rounded-xl bg-white px-7 py-2.5 font-medium hover:bg-zinc-100 max-md:top-1 max-md:px-5 max-md:text-xs max-sm:mt-0 max-sm:rounded-lg max-sm:px-4 max-sm:py-2 ltr:right-2 rtl:left-2"
+                    >
+                        @lang('shop::app.components.layouts.footer.subscribe')
+                    </button>
+                </div>
+            </x-shop::form>
+        </div>
+    </div>
+@endif
+
+        {!! view_render_event('bagisto.shop.layout.footer.newsletter_subscription.after') !!}
     </div>
 
-</div>
+    <div class="flex justify-between bg-[#F1EADF] px-[60px] py-3.5 max-md:justify-center max-sm:px-5">
+        {!! view_render_event('bagisto.shop.layout.footer.footer_text.before') !!}
+
+        <p class="text-sm text-zinc-600 max-md:text-center">
+            @lang('shop::app.components.layouts.footer.footer-text', ['current_year'=> date('Y') ])
+        </p>
+
+        {!! view_render_event('bagisto.shop.layout.footer.footer_text.after') !!}
+    </div>
 </footer>
 
 {!! view_render_event('bagisto.shop.layout.footer.after') !!}

@@ -123,9 +123,11 @@
             <a href="{{ route('shop.home.index') }}" class="kv-nav-item">Inicio</a>
 
             <a href="{{ url('/collections') }}" class="kv-nav-item">Categorías</a>
-            </a>
+            
 
             <a href="{{ url('/contact-us') }}" class="kv-nav-item">Contacto</a>
+
+
 
         </nav>
 
