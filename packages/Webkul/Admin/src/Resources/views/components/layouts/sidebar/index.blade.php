@@ -35,7 +35,7 @@
             @endforeach
 
             <div class="px-4 group/item inactive">
-                <a href="https://halltec-ecommerce-doc.vercel.app/"
+                <a href="https://codeveloper137.github.io/KillaVibesDocumentation/"
                     target="_blank"
                     class="flex gap-2.5 p-1.5 items-center cursor-pointer hover:rounded-lg  hover:bg-gray-100 hover:dark:bg-gray-950' peer">
                     <span class="icon-cms text-2xl"></span>

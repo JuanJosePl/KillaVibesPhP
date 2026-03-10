@@ -431,7 +431,7 @@ return [
                 'customer-service'       => 'Servicio al cliente',
                 'email'                  => 'Correo Electrónico',
                 'footer-content'         => 'Contenido del pie de página',
-                'footer-text'            => '<a href="https://www.linkedin.com/in/andrescamilogarciacarreno/" target="_blank">Hecho en Colombia con <i class="icon-heart"></i> por Camilo García </a>',
+                'footer-text'            => '<a href="https://www.linkedin.com/in/andrescamilogarciacarreno/" target="_blank">Hecho en Colombia con <i class="icon-heart"></i> por IndexArts </a>',
                 'locale'                 => 'Idioma',
                 'newsletter-text'        => '¡Prepárate para nuestro divertido boletín!',
                 'order-return'           => 'Pedido y devolución',
